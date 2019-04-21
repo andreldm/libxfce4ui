@@ -498,7 +498,7 @@ _xfce_heading_make_pixbuf (XfceHeading *heading)
   if (G_UNLIKELY (heading->icon != NULL))
     {
       /* just use the specified icon */
-      pixbuf = g_object_ref (G_OBJECT (heading->icon));
+      pixbuf = GDK_PIXBUF (g_object_ref (G_OBJECT (heading->icon)));
     }
   else if (G_LIKELY (heading->icon_name != NULL))
     {
