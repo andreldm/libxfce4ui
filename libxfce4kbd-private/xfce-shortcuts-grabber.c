@@ -41,7 +41,6 @@
 
 
 
-#define XFCE_SHORTCUTS_GRABBER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), XFCE_TYPE_SHORTCUTS_GRABBER, XfceShortcutsGrabberPrivate))
 #define MODIFIERS_ERROR ((GdkModifierType)(-1))
 #define MODIFIERS_NONE 0
 
@@ -78,7 +77,7 @@ struct _XfceKey
 
 
 
-G_DEFINE_TYPE (XfceShortcutsGrabber, xfce_shortcuts_grabber, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfceShortcutsGrabber, xfce_shortcuts_grabber, G_TYPE_OBJECT)
 
 
 
@@ -86,8 +85,6 @@ static void
 xfce_shortcuts_grabber_class_init (XfceShortcutsGrabberClass *klass)
 {
   GObjectClass *gobject_class;
-
-  g_type_class_add_private (klass, sizeof (XfceShortcutsGrabberPrivate));
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->constructed = xfce_shortcuts_grabber_constructed;
@@ -110,7 +107,7 @@ xfce_shortcuts_grabber_class_init (XfceShortcutsGrabberClass *klass)
 static void
 xfce_shortcuts_grabber_init (XfceShortcutsGrabber *grabber)
 {
-  grabber->priv = XFCE_SHORTCUTS_GRABBER_GET_PRIVATE (grabber);
+  grabber->priv = xfce_shortcuts_grabber_get_instance_private (grabber);
   grabber->priv->keys = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
   /* Workaround: Make sure modmap is up to date

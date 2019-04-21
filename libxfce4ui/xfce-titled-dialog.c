@@ -45,9 +45,6 @@
 #include <libxfce4ui/xfce-gtk-extensions.h>
 
 
-#define XFCE_TITLED_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), XFCE_TYPE_TITLED_DIALOG, XfceTitledDialogPrivate))
-
-
 
 /* Property identifiers */
 enum
@@ -80,7 +77,7 @@ struct _XfceTitledDialogPrivate
 
 
 
-G_DEFINE_TYPE (XfceTitledDialog, xfce_titled_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (XfceTitledDialog, xfce_titled_dialog, GTK_TYPE_DIALOG)
 
 
 
@@ -90,9 +87,6 @@ xfce_titled_dialog_class_init (XfceTitledDialogClass *klass)
   GtkDialogClass *gtkdialog_class;
   GtkBindingSet  *binding_set;
   GObjectClass   *gobject_class;
-
-  /* add our private data to the class */
-  g_type_class_add_private (klass, sizeof (XfceTitledDialogPrivate));
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->finalize = xfce_titled_dialog_finalize;
@@ -132,7 +126,7 @@ xfce_titled_dialog_init (XfceTitledDialog *titled_dialog)
   GtkWidget *content_area;
 
   /* connect the private data */
-  titled_dialog->priv = XFCE_TITLED_DIALOG_GET_PRIVATE (titled_dialog);
+  titled_dialog->priv = xfce_titled_dialog_get_instance_private (titled_dialog);
 
   /* remove the main dialog box from the window */
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (titled_dialog));
