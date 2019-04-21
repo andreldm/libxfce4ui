@@ -316,7 +316,7 @@ xfce_shortcuts_grabber_grab (XfceShortcutsGrabber *grabber,
           /* Retrieve the root window of the screen */
 #if GTK_CHECK_VERSION (3, 0, 0)
           root_window = GDK_WINDOW_XID (gdk_screen_get_root_window (gdk_display_get_default_screen (display)));
-          gdk_x11_display_trap_push (display);
+          gdk_x11_display_error_trap_push (display);
 #else
           root_window = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window (gdk_display_get_screen (display, j)));
           gdk_error_trap_push ();
@@ -343,7 +343,7 @@ xfce_shortcuts_grabber_grab (XfceShortcutsGrabber *grabber,
           gdk_display_flush (display);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-          if (gdk_x11_display_trap_pop (display))
+          if (gdk_x11_display_error_trap_pop (display))
 #else
           if (gdk_error_trap_pop ())
 #endif
