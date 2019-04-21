@@ -101,7 +101,7 @@ xfce_dialog_show_help_uri (GdkScreen *screen,
   else
     {
       /* not very likely to happen, but it is possible exo is not installed */
-      result = gtk_show_uri (screen, uri->str, gtk_get_current_event_time (), &error);
+      result = gtk_show_uri_on_window (parent, uri->str, gtk_get_current_event_time (), &error);
     }
 
   if (!result)
